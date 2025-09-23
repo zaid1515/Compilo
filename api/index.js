@@ -7,12 +7,17 @@ const cors = require("cors");
 const { connectDB } = require("./db/connect");
 const errorHandler = require("./middlewares/errorHandler");
 const notFound = require("./middlewares/notFound");
+const { authRouter } = require("./routes/auth");
+const userRouter = require("./routes/user");
+const { verifyToken } = require("./middlewares/verifyToken");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use('/api/auth',authRouter)
+app.use(verifyToken)
+app.use('/api/user',userRouter)
 
 app.use(notFound)
 app.use(errorHandler)
@@ -20,7 +25,7 @@ app.use(errorHandler)
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    app.listen(() => {
+    app.listen(3000,() => {
       console.log(`Server is listening to port ${PORT}`);
     });
   } catch (error) {

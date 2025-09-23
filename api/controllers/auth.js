@@ -2,6 +2,7 @@ const { CustomApiError } = require("../errors/custom-error");
 const asyncWrap = require("../middlewares/asyncWrap");
 const validator=require('validator');
 const User = require("../models/user");
+const jwt=require('jsonwebtoken')
 
 const register=asyncWrap(async(req,res)=>{
      const {name,email,password}=req.body
@@ -24,7 +25,7 @@ const register=asyncWrap(async(req,res)=>{
 
      res.status(201).json({
           success:true,
-          message:"User created successfully",
+          message:"User created successfully.",
           data:newUser
      })
 })
@@ -35,18 +36,29 @@ const login=asyncWrap(async(req,res)=>{
           throw new CustomApiError("All fields are required",400)
      }
      if(!validator.isEmail(email)){
-          throw new CustomApiError("Invalid Email format",400)
+          throw new CustomApiError("Invalid Email format",401)
      }
 
-     const user=await User.findOne({email:email}).select("password")
+     const user=await User.findOne({email:email}).select("+password")
      if(!user){
           throw new CustomApiError("User does not exist.",404)
      }
-
-     const checkPassword=await bcrypt.compare(password,user.password);
+     const checkPassword=await user.comparePassword(password);
      if(!checkPassword){
-          throw new CustomApiError("Invalid Credentials",400)
+          throw new CustomApiError("Invalid Credentials",401)
      }
+
+     const jwtToken = await  jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1h'})
+
+     res.status(200).json({
+          success:true,
+          message:"User logged in successfully.",
+          data:{
+               email:user.email
+          },
+          token:jwtToken
+     })
+     
 })
 
 module.exports={register,login}
