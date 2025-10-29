@@ -1,0 +1,6 @@
+.feature-list-item{
+     padding: 1.6rem;
+     background-color: var(--light-primary-color);
+     border: 2px solid var(--extra-light-primary-color);
+     border-radius: 8px;
+}
