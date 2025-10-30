@@ -10,4 +10,6 @@
      --secondary-text-color:#d1d5db;
      background-color:var(--primary-color);
      color: white;
+     margin:0;
+     padding: 0;
 }
