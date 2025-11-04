@@ -1,3 +1,22 @@
+label{
+     display: block;
+}
 input{
-     display: flex;
+     width: 100%;
+     padding:.48rem;
+     color: white;
+     border: 1px solid var(--light-primary-color);
+     border-radius: 6px;
+     transition: all 0.2s ease;
+     
+}
+
+input:focus {
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 0 0 2px var(--secondary-color);
+  outline:none;
+}
+
+.register-input-div{
+     margin-bottom: .88rem;
 }

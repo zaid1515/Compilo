@@ -8,6 +8,7 @@
      --secondary-color:#10b981;
      --dark-secondary-color:#059669;
      --secondary-text-color:#d1d5db;
+     --tertiary-text-color:#95a1b5;
      background-color:var(--primary-color);
      color: white;
      margin:0;
