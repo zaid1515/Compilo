@@ -35,9 +35,9 @@ export default function Login() {
             <input type="text" placeholder="someone@example.com" />
           </div>
           <div className="login-input-div password-input space-y-2">
-            <div className="password-div flex">
+            <div className="password-div flex justify-between">
                <label htmlFor="password">Password</label>
-               <a href='/forgot-password' className="forgot-password"></a>
+               <a href='/forgot-password' className="forgot-password text-[var(--secondary-color)]">Forgot Password?</a>
             </div>
             <input type="password" />
           </div>
