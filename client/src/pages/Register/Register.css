@@ -17,6 +17,18 @@ input:focus {
   outline:none;
 }
 
-.register-input-div{
-     margin-bottom: .88rem;
+.register-input-div,
+.login-input-div {
+  margin-bottom: .88rem;
+}
+
+.login-content,
+.register-content {
+  width: 100%;
+  max-width: 28rem;
+  background: var(--dark-primary-color);
+  border: 2px solid var(--light-primary-color);
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+  box-sizing: border-box;
 }
