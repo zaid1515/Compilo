@@ -1,7 +1,48 @@
-import React from "react";
-import '../Register/Register.css'
+import React, { useState } from "react";
+import "../Register/Register.css";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 export default function Login() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const { email, password } = form;
+      const res = await axios.post("http://localhost:3000/api/auth/login", {
+        email: email,
+        password: password,
+      });
+      console.log(res);
+      const result = res?.data;
+      if (!result) {
+        alert("Failed to login user!");
+      } 
+      else {
+        alert("User logged in successfully!");
+        navigate("/");
+     //    store token
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = async (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="login-page min-h-screen flex items-center justify-center bg-[var(--primary-color)]">
       <div className="login-content bg-[var(--dark-primary-color)] border-[var(--light-primary-color)] border-2 rounded-lg my-4 p-7">
@@ -29,20 +70,39 @@ export default function Login() {
             Enter your credentials to access your account
           </div>
         </div>
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="login-input-div email-input space-y-2">
             <label htmlFor="email">Email</label>
-            <input type="text" placeholder="someone@example.com" />
+            <input
+              type="text"
+              name="email"
+              placeholder="someone@example.com"
+              value={form.email}
+              onChange={handleChange}
+            />
           </div>
           <div className="login-input-div password-input space-y-2">
             <div className="password-div flex justify-between">
-               <label htmlFor="password">Password</label>
-               <a href='/forgot-password' className="forgot-password text-[var(--secondary-color)]">Forgot Password?</a>
+              <label htmlFor="password">Password</label>
+              <a
+                href="/forgot-password"
+                className="forgot-password text-[var(--secondary-color)]"
+              >
+                Forgot Password?
+              </a>
             </div>
-            <input type="password" />
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+            />
           </div>
           <div className="login-account-btn">
-            <button className="login-account w-full bg-[var(--secondary-color)] text-[var(--primary-color)] my-1 py-2 rounded-lg">
+            <button
+              className="login-account w-full bg-[var(--secondary-color)] text-[var(--primary-color)] my-1 py-2 rounded-lg"
+              type="submit"
+            >
               Sign In
             </button>
           </div>

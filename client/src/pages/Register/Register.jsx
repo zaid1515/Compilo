@@ -11,7 +11,7 @@ export default function Register() {
     confirmPassword: "",
   });
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     try {
@@ -31,13 +31,13 @@ export default function Register() {
             password: password,
           }
         );
-        const result=response?.data;
-        if(result){
-          alert('User registered successfully')
-          navigate('/login')
-        }
-        else{
-          alert("User registration failed")
+        const result = response?.data;
+        console.log(result);
+        if (result) {
+          alert("User registered successfully");
+          navigate("/login");
+        } else {
+          alert("User registration failed");
         }
       }
     } catch (error) {
@@ -102,12 +102,22 @@ export default function Register() {
 
           <div className="register-input-div password-input space-y-2">
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" value={form.password} onChange={handleChange}/>
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="register-input-div confirm-password-input space-y-2">
             <label htmlFor="confirm-password">Confirm Password</label>
-            <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange}/>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="create-account-btn">
