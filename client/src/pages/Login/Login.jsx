@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import "../Register/Register.css";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("userId")));
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
   const navigate = useNavigate();
 
@@ -23,11 +26,18 @@ export default function Login() {
       const result = res?.data;
       if (!result) {
         alert("Failed to login user!");
-      } 
-      else {
+      } else {
         alert("User logged in successfully!");
+
+        const newToken = result.token;
+        const decodedUser = jwtDecode(newToken);
+
+        setToken(newToken);
+        setUserId(decodedUser.id);
+
+        localStorage.setItem("token", JSON.stringify(newToken));
+        localStorage.setItem("userId", JSON.stringify(decodedUser.id));
         navigate("/");
-     //    store token
       }
     } catch (error) {
       console.log(error);
