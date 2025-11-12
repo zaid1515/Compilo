@@ -9,8 +9,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("userId")));
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
   const navigate = useNavigate();
 
@@ -31,9 +29,6 @@ export default function Login() {
 
         const newToken = result.token;
         const decodedUser = jwtDecode(newToken);
-
-        setToken(newToken);
-        setUserId(decodedUser.id);
 
         localStorage.setItem("token", JSON.stringify(newToken));
         localStorage.setItem("userId", JSON.stringify(decodedUser.id));
